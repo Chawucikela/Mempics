@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:mempics/global_constants.dart';
 import 'package:mempics/utils/fade_animation_route.dart';
 
 import 'base_page.dart';

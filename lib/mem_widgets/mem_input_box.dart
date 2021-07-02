@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../global_constants.dart';
+import '../global.dart';
 
 class MemInputBox extends StatefulWidget {
   bool hasBorder = true;
@@ -57,7 +57,7 @@ class _MemInputBoxState extends State<MemInputBox> {
           ),
       margin: widget.margin,
       decoration: BoxDecoration(
-        color: widget.backgroundColor ?? GlobalConstants.memBgGrey,
+        color: widget.backgroundColor ?? Global.memBgGrey,
         border: widget.hasBorder
             ? Border.all(
                 width: widget.borderWidth ?? 0.5,
@@ -73,10 +73,10 @@ class _MemInputBoxState extends State<MemInputBox> {
         controller: widget.controller,
         textInputAction: widget.textInputAction,
         keyboardType: widget.textInputType,
-        obscureText: widget.obscureText??false,
+        obscureText: widget.obscureText ?? false,
         style: widget.textStyle ??
             TextStyle(
-              color: GlobalConstants.memDarkGrey1,
+              color: Global.memDarkGrey1,
               fontSize: 18,
             ),
         decoration: InputDecoration(
@@ -84,7 +84,7 @@ class _MemInputBoxState extends State<MemInputBox> {
           hintStyle: widget.hintTextStyle ??
               TextStyle(
                 fontSize: 16,
-                color: GlobalConstants.memLightGrey2,
+                color: Global.memLightGrey2,
               ),
           border: InputBorder.none,
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mempics/global_constants.dart';
 
 abstract class BasePage extends StatefulWidget {
   BasePage({Key key});

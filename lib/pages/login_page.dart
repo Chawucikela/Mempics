@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mempics/pages/base_page.dart';
-import 'package:mempics/global_constants.dart';
-import 'package:mempics/pages/home_page.dart';
+import 'package:mempics/global.dart';
 import 'package:mempics/mem_widgets/mem_input_box.dart';
+import 'package:mempics/mem_widgets/mem_network_avatar.dart';
+import 'package:mempics/model/user_info/user_info_model.dart';
+import 'package:mempics/pages/base_page.dart';
+import 'package:mempics/pages/main_frame_page.dart';
 
 class LoginPage extends BasePage {
   @override
@@ -27,8 +30,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
   @override
   void initController_2nd() {
     super.initController_2nd();
-    _phoneTextEditingController = TextEditingController();
-    _passwordTextEditingController = TextEditingController();
+    _phoneTextEditingController = TextEditingController(text: '13168538283');
+    _passwordTextEditingController = TextEditingController(text: '123456');
     _ipAddressTextEditingController =
         TextEditingController(text: serverAddress);
   }
@@ -42,6 +45,13 @@ class _LoginPageState extends BasePageState<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Container(
+                  child: MemAvatar(
+                      '$serverAddress/filetransfer/downloadprofilepic?uid='),
+                  width: 100,
+                  height: 100,
+                  margin: EdgeInsets.symmetric(vertical: 40),
+                ),
                 //手机号输入框
                 MemInputBox(
                   controller: _phoneTextEditingController,
@@ -93,13 +103,13 @@ class _LoginPageState extends BasePageState<LoginPage> {
                 ),
                 //登录按钮
                 Container(
-                  width: GlobalConstants.screenWidth,
+                  width: Global.screenWidth,
                   margin: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
                   ),
                   child: FlatButton(
-                    color: GlobalConstants.memBlue,
+                    color: Global.memBlue,
                     padding: EdgeInsets.symmetric(
                       vertical: 14,
                     ),
@@ -107,7 +117,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                       'Log In',
                       style: TextStyle(
                         fontSize: 16,
-                        color: GlobalConstants.memWhite,
+                        color: Global.memWhite,
                       ),
                     ),
                     onPressed: () {
@@ -135,17 +145,21 @@ class _LoginPageState extends BasePageState<LoginPage> {
       connectTimeout: 10000,
     );
     Dio dio = Dio(baseOptions);
+    dio.interceptors.add(CookieManager(Global.cookieJar));
     Response response = await dio.post(
       '$serverAddress/user/login',
       data: formData,
     );
     if (response.data['status'] == 0) {
       Fluttertoast.showToast(msg: '登录成功！');
+      UserInfoModel userInfoModel =
+          UserInfoModel.fromJson(response.data['data']);
+      LoggedInUser.loggedIn(userInfoModel);
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return HomePage();
+            return MainFramePage();
           },
         ),
       );
@@ -155,5 +169,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    _phoneTextEditingController.clear();
+    _passwordTextEditingController.clear();
+    _ipAddressTextEditingController.clear();
   }
 }
