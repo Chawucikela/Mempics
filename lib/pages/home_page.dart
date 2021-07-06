@@ -73,22 +73,4 @@ class _HomePageState extends BasePageState<HomePage> {
       Fluttertoast.showToast(msg: '获取失败！');
     }
   }
-
-  // Future<void> getPostData(String id) async {
-  //   BaseOptions baseOptions = BaseOptions(
-  //     connectTimeout: 10000,
-  //   );
-  //   Dio dio = Dio(baseOptions);
-  //   dio.interceptors.add(CookieManager(GlobalConstants.cookieJar));
-  //   Response response = await dio.get(
-  //     '$serverAddress/share/getpublish?id=$id',
-  //   );
-  //   if (response.data['status'] == 0) {
-  //     Fluttertoast.showToast(msg: '获取成功！');
-  //     itemData.add(response.data['data']['shareRecords']);
-  //     setState(() {});
-  //   } else {
-  //     Fluttertoast.showToast(msg: '获取失败！');
-  //   }
-  // }
 }

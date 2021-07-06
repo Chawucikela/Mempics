@@ -7,6 +7,8 @@ import 'model/user_info/user_info_model.dart';
 
 String serverAddress = 'http://10.0.0.12:8080';
 
+//flutter pub run build_runner build
+
 //全局常量
 class Global {
   static Global instance = Global();
@@ -55,8 +57,8 @@ class LoggedInUser {
     userInfoModel = uim;
   }
 
-  //获取当前登录用户信息
+  /*//获取当前登录用户信息
   static UserInfoModel getLoggedInUserInfo() {
     return userInfoModel;
-  }
+  }*/
 }

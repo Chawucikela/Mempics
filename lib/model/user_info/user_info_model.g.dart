@@ -14,6 +14,9 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) {
     json['username'] as String,
     json['gender'] as int,
     json['age'] as int,
+    json['postAmount'] as int,
+    json['followerAmount'] as int,
+    json['followingAmount'] as int,
   );
 }
 
@@ -25,4 +28,7 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'username': instance.username,
       'gender': instance.gender,
       'age': instance.age,
+      'postAmount': instance.postAmount,
+      'followerAmount': instance.followerAmount,
+      'followingAmount': instance.followingAmount,
     };

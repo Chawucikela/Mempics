@@ -5,7 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mempics/global.dart';
 import 'package:mempics/mem_widgets/mem_input_box.dart';
-import 'package:mempics/mem_widgets/mem_network_avatar.dart';
 import 'package:mempics/model/user_info/user_info_model.dart';
 import 'package:mempics/pages/base_page.dart';
 import 'package:mempics/pages/main_frame_page.dart';
@@ -45,13 +44,13 @@ class _LoginPageState extends BasePageState<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  child: MemAvatar(
-                      '$serverAddress/filetransfer/downloadprofilepic?uid='),
-                  width: 100,
-                  height: 100,
-                  margin: EdgeInsets.symmetric(vertical: 40),
-                ),
+                // Container(
+                //   child: MemAvatar(
+                //       '$serverAddress/filetransfer/downloadprofilepic?uid='),
+                //   width: 100,
+                //   height: 100,
+                //   margin: EdgeInsets.symmetric(vertical: 40),
+                // ),
                 //手机号输入框
                 MemInputBox(
                   controller: _phoneTextEditingController,

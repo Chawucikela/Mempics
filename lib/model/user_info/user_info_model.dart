@@ -4,12 +4,15 @@ part 'user_info_model.g.dart';
 
 @JsonSerializable()
 class UserInfoModel {
-  final int id;
-  final String phone;
-  final String nickname;
-  final String username;
-  final int gender;
-  final int age;
+  final int id; //用户id
+  final String phone; //手机号
+  final String nickname; //昵称
+  final String username; //用户名
+  final int gender; //性别
+  final int age; //年龄
+  int postAmount; //发布的动态数
+  int followerAmount; //粉丝数
+  int followingAmount; //关注数
 
   UserInfoModel(
     this.id,
@@ -18,6 +21,9 @@ class UserInfoModel {
     this.username,
     this.gender,
     this.age,
+    this.postAmount,
+    this.followerAmount,
+    this.followingAmount,
   );
 
   factory UserInfoModel.fromJson(Map<String, dynamic> srcJson) =>

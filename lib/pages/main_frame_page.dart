@@ -94,9 +94,9 @@ class _MainFramePageState extends BasePageState<MainFramePage> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //首页tab
+          //Home tab
           bottomNavigatorTab(0),
-          //工单tab
+          //Explore tab
           bottomNavigatorTab(1),
           //添加按钮
           Expanded(
@@ -114,9 +114,9 @@ class _MainFramePageState extends BasePageState<MainFramePage> {
               onTap: add,
             ),
           ),
-          //资产tab
+          //Activity tab
           bottomNavigatorTab(2),
-          //消息tab
+          //Mine tab
           bottomNavigatorTab(3),
         ],
       ),
@@ -183,117 +183,117 @@ class _MainFramePageState extends BasePageState<MainFramePage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Material(
-              child: Ink(
-                child: InkWell(
-                  child: Container(
-                    child: Text(
-                      '新增报障工单',
-                      style: TextStyle(
-                        color: Global.memBlue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'SongTi',
-                      ),
-                    ),
-                    height: 48,
-                    alignment: Alignment.center,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return WorkOrderOptionsPage(
-                    //         WorkOrderType.FAULT_REPORT,
-                    //         WorkOrderActionType.ADD,
-                    //       );
-                    //     },
-                    //   ),
-                    // );
-                    // Navigator.pop(this.context);
-                  },
-                ),
-                color: Global.memWhite,
-              ),
-            ),
-            Divider(
-              height: 0.6,
-              thickness: 0.6,
-              color: Global.memBgGrey,
-            ),
-            Material(
-              child: Ink(
-                child: InkWell(
-                  child: Container(
-                    child: Text(
-                      '新增业务工单',
-                      style: TextStyle(
-                        color: Global.memBlue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'SongTi',
-                      ),
-                    ),
-                    height: 48,
-                    alignment: Alignment.center,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return WorkOrderOptionsPage(
-                    //         WorkOrderType.BUSINESS,
-                    //         WorkOrderActionType.ADD,
-                    //       );
-                    //     },
-                    //   ),
-                    // );
-                    // Navigator.pop(this.context);
-                  },
-                ),
-                color: Global.memWhite,
-              ),
-            ),
-            Divider(
-              height: 0.6,
-              thickness: 0.6,
-              color: Global.memBgGrey,
-            ),
-            Material(
-              child: Ink(
-                child: InkWell(
-                  child: Container(
-                    child: Text(
-                      '发送消息',
-                      style: TextStyle(
-                        color: Global.memBlue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'SongTi',
-                      ),
-                    ),
-                    height: 48,
-                    alignment: Alignment.center,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return MessageSendingPage(false);
-                    //     },
-                    //   ),
-                    // );
-                  },
-                ),
-                color: Global.memWhite,
-              ),
-            ),
+            // Material(
+            //   child: Ink(
+            //     child: InkWell(
+            //       child: Container(
+            //         child: Text(
+            //           '新增报障工单',
+            //           style: TextStyle(
+            //             color: Global.memBlue,
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: 'SongTi',
+            //           ),
+            //         ),
+            //         height: 48,
+            //         alignment: Alignment.center,
+            //       ),
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //         // Navigator.push(
+            //         //   context,
+            //         //   MaterialPageRoute(
+            //         //     builder: (context) {
+            //         //       return WorkOrderOptionsPage(
+            //         //         WorkOrderType.FAULT_REPORT,
+            //         //         WorkOrderActionType.ADD,
+            //         //       );
+            //         //     },
+            //         //   ),
+            //         // );
+            //         // Navigator.pop(this.context);
+            //       },
+            //     ),
+            //     color: Global.memWhite,
+            //   ),
+            // ),
+            // Divider(
+            //   height: 0.6,
+            //   thickness: 0.6,
+            //   color: Global.memBgGrey,
+            // ),
+            // Material(
+            //   child: Ink(
+            //     child: InkWell(
+            //       child: Container(
+            //         child: Text(
+            //           '新增业务工单',
+            //           style: TextStyle(
+            //             color: Global.memBlue,
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: 'SongTi',
+            //           ),
+            //         ),
+            //         height: 48,
+            //         alignment: Alignment.center,
+            //       ),
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //         // Navigator.push(
+            //         //   context,
+            //         //   MaterialPageRoute(
+            //         //     builder: (context) {
+            //         //       return WorkOrderOptionsPage(
+            //         //         WorkOrderType.BUSINESS,
+            //         //         WorkOrderActionType.ADD,
+            //         //       );
+            //         //     },
+            //         //   ),
+            //         // );
+            //         // Navigator.pop(this.context);
+            //       },
+            //     ),
+            //     color: Global.memWhite,
+            //   ),
+            // ),
+            // Divider(
+            //   height: 0.6,
+            //   thickness: 0.6,
+            //   color: Global.memBgGrey,
+            // ),
+            // Material(
+            //   child: Ink(
+            //     child: InkWell(
+            //       child: Container(
+            //         child: Text(
+            //           '发送消息',
+            //           style: TextStyle(
+            //             color: Global.memBlue,
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: 'SongTi',
+            //           ),
+            //         ),
+            //         height: 48,
+            //         alignment: Alignment.center,
+            //       ),
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //         // Navigator.push(
+            //         //   context,
+            //         //   MaterialPageRoute(
+            //         //     builder: (context) {
+            //         //       return MessageSendingPage(false);
+            //         //     },
+            //         //   ),
+            //         // );
+            //       },
+            //     ),
+            //     color: Global.memWhite,
+            //   ),
+            // ),
           ],
         );
       },
