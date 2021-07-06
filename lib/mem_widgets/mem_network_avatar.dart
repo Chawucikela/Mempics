@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
 class MemAvatar extends StatefulWidget {
+  final double width;
+  final double height;
+  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
   final String inputUrl;
   final bool isOnline;
 
   MemAvatar(
     this.inputUrl, {
+    this.width,
+    this.height,
+    this.margin,
+    this.padding,
     this.isOnline,
   });
 
@@ -23,11 +31,17 @@ class MemAvatarState extends State<MemAvatar> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
-      child: FadeInImage.assetNetwork(
-        fit: BoxFit.cover,
-        placeholder: 'res/image/no_avatar.png',
-        image: widget.inputUrl,
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      margin: widget.margin,
+      padding: widget.padding,
+      child: ClipOval(
+        child: FadeInImage(
+          fit: BoxFit.cover,
+          placeholder: AssetImage('res/image/no_avatar.png'),
+          image: NetworkImage(widget.inputUrl, headers: {}),
+        ),
       ),
     );
   }

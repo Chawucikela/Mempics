@@ -32,6 +32,8 @@ class MemTitleBar extends StatefulWidget {
   //额外底部组件
   final Widget additionalBottomWidget;
 
+  final bool withShadow;
+
   MemTitleBar(
     this.title, {
     this.titleReplacementWidget,
@@ -42,6 +44,7 @@ class MemTitleBar extends StatefulWidget {
     this.leftAction,
     this.rightAction,
     this.additionalBottomWidget,
+    this.withShadow,
   });
 
   @override
@@ -62,12 +65,14 @@ class MemTitleBarState extends State<MemTitleBar> {
       width: Global.screenWidth,
       decoration: BoxDecoration(
         color: Global.memWhite,
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(30, 0, 0, 0),
-            blurRadius: 2.0,
-          ),
-        ],
+        boxShadow: widget.withShadow
+            ? [
+                BoxShadow(
+                  color: Color.fromARGB(30, 0, 0, 0),
+                  blurRadius: 2.0,
+                ),
+              ]
+            : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,10 +139,12 @@ class MemTitleBarState extends State<MemTitleBar> {
                             ?
                             //头像
                             Container(
-                                width: 28,
-                                height: 28,
                                 margin: EdgeInsets.all(6),
-                                child: MemAvatar(widget.avatarImage),
+                                child: MemAvatar(
+                                  widget.avatarImage,
+                                  width: 80,
+                                  height: 80,
+                                ),
                                 /*ClipOval(
                                   child: FadeInImage.assetNetwork(
                                     placeholder:
