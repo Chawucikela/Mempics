@@ -35,6 +35,9 @@ dependencies:
   dio_cookie_manager: ^1.0.0
   cookie_jar: ^1.0.1
   json_annotation: ^3.1.1 #json自动反序列化
+  flutter_staggered_grid_view: ^0.3.4 #瀑布流布局
+  cached_network_image: ^2.5.1 # 带缓存的网络图片加载组件
+  file_picker: ^2.1.7 #文件选择器
 
 
 dev_dependencies:

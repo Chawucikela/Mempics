@@ -46,6 +46,14 @@ class Global {
 
   //主题蓝
   static Color memBlue = Color.fromARGB(255, 19, 108, 250);
+
+  static String getAvatarUrl(int userId) {
+    return '$serverAddress/filetransfer/downloadprofilepic?uid=$userId';
+  }
+
+  static String getPostImageUrl(String recordid, String filename) {
+    return '$serverAddress/filetransfer/download?recordid=$recordid&filename=$filename';
+  }
 }
 
 //登录后用户

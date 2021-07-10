@@ -15,4 +15,14 @@ class _ExplorePageState extends BasePageState {
   Widget build(BuildContext context) {
     return Scaffold();
   }
+
+  @override
+  void initController_2nd() {
+    // TODO: implement initController_2nd
+  }
+
+  @override
+  void initData_1st() {
+    // TODO: implement initData_1st
+  }
 }

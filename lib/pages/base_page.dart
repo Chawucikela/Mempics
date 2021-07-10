@@ -12,7 +12,7 @@ abstract class BasePageState<T extends BasePage> extends State<T> {
     initController_2nd();
   }
 
-  void initData_1st() {}
+  void initData_1st();
 
-  void initController_2nd() {}
+  void initController_2nd();
 }

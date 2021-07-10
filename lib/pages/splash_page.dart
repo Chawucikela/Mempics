@@ -41,4 +41,14 @@ class _SplashPageState extends BasePageState<SplashPage> {
   void dispose() {
     super.dispose();
   }
+
+  @override
+  void initController_2nd() {
+    // TODO: implement initController_2nd
+  }
+
+  @override
+  void initData_1st() {
+    // TODO: implement initData_1st
+  }
 }

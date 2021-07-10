@@ -23,12 +23,10 @@ class _LoginPageState extends BasePageState<LoginPage> {
 
   @override
   void initData_1st() {
-    super.initData_1st();
   }
 
   @override
   void initController_2nd() {
-    super.initController_2nd();
     _phoneTextEditingController = TextEditingController(text: '13168538283');
     _passwordTextEditingController = TextEditingController(text: '123456');
     _ipAddressTextEditingController =
@@ -44,13 +42,17 @@ class _LoginPageState extends BasePageState<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Container(
-                //   child: MemAvatar(
-                //       '$serverAddress/filetransfer/downloadprofilepic?uid='),
-                //   width: 100,
-                //   height: 100,
-                //   margin: EdgeInsets.symmetric(vertical: 40),
-                // ),
+                Container(
+                  child: Text(
+                    'Mempics',
+                    style: TextStyle(
+                      fontSize: 30,
+                      // fontWeight: FontWeight.bold,
+                      color: Global.memDarkGrey2,
+                    ),
+                  ),
+                  margin: EdgeInsets.only(bottom: 30),
+                ),
                 //手机号输入框
                 MemInputBox(
                   controller: _phoneTextEditingController,
@@ -105,7 +107,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                   width: Global.screenWidth,
                   margin: EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 10,
+                    vertical: 20,
                   ),
                   child: FlatButton(
                     color: Global.memBlue,
@@ -149,6 +151,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
       '$serverAddress/user/login',
       data: formData,
     );
+    print('/user/login');
     if (response.data['status'] == 0) {
       Fluttertoast.showToast(msg: '登录成功！');
       UserInfoModel userInfoModel =

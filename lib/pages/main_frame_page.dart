@@ -82,12 +82,12 @@ class _MainFramePageState extends BasePageState<MainFramePage> {
       padding: EdgeInsets.only(left: 5, right: 5),
       decoration: BoxDecoration(
         color: Global.memWhite,
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(20, 0, 0, 0),
-            blurRadius: 2.0,
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Color.fromARGB(20, 0, 0, 0),
+        //     blurRadius: 2.0,
+        //   ),
+        // ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

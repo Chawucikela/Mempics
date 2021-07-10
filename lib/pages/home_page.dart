@@ -19,7 +19,6 @@ class _HomePageState extends BasePageState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Global.memWhite,
       body: Stack(
         children: [
           ListView.separated(
@@ -48,29 +47,10 @@ class _HomePageState extends BasePageState<HomePage> {
 
   @override
   void initData_1st() {
-    super.initData_1st();
     itemData = [];
-    getData();
   }
 
   @override
   void initController_2nd() {
-    super.initController_2nd();
-  }
-
-  Future<void> getData() async {
-    BaseOptions baseOptions = BaseOptions(
-      connectTimeout: 10000,
-    );
-    Dio dio = Dio(baseOptions);
-    dio.interceptors.add(CookieManager(Global.cookieJar));
-    Response response = await dio.get(
-      '$serverAddress/share/allmypublish',
-    );
-    if (response.data['status'] == 0) {
-      Fluttertoast.showToast(msg: '获取成功！');
-    } else {
-      Fluttertoast.showToast(msg: '获取失败！');
-    }
   }
 }
