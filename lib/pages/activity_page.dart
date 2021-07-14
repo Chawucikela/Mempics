@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mempics/mem_widgets/mem_title_bar.dart';
 
 import 'base_page.dart';
 
@@ -13,7 +14,19 @@ class ActivityPage extends BasePage {
 class _ActivityPageState extends BasePageState {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            child: MemTitleBar(
+              'Activity',
+              withShadow: false,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

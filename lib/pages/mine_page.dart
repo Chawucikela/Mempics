@@ -8,8 +8,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mempics/global.dart';
 import 'package:mempics/mem_widgets/mem_button.dart';
-import 'package:mempics/mem_widgets/mem_network_avatar.dart';
+import 'package:mempics/mem_widgets/mem_avatar.dart';
 import 'package:mempics/mem_widgets/mem_title_bar.dart';
+import 'package:mempics/model/post_record/post_record_model.dart';
 
 import 'base_page.dart';
 
@@ -40,7 +41,7 @@ class _MinePageState extends BasePageState {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -50,6 +51,11 @@ class _MinePageState extends BasePageState {
                           width: 80,
                           height: 80,
                           margin: EdgeInsets.only(right: 16),
+                          isOval: true,
+                          border: Border.all(
+                            width: 0.6,
+                            color: Colors.grey[300],
+                          ),
                         ),
                         Expanded(
                           child: Row(
@@ -80,9 +86,7 @@ class _MinePageState extends BasePageState {
                   ),
                   //昵称和简介
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -108,15 +112,15 @@ class _MinePageState extends BasePageState {
                   ),
                   //个人信息编辑按钮
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     child: MemButton(
                       width: Global.screenWidth,
                       alignment: Alignment.center,
                       border: Border.all(
                         width: 0.8,
-                        color: Colors.grey[350],
+                        color: Global.memLightGrey1,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
                       margin: EdgeInsets.symmetric(vertical: 4),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -135,39 +139,29 @@ class _MinePageState extends BasePageState {
                       },
                     ),
                   ),
-                  // MediaQuery.removePadding(
-                  //   context: context,
-                  //   removeTop: true,
-                  //   child: ListView.builder(
-                  //     shrinkWrap: true,
-                  //     physics: NeverScrollableScrollPhysics(),
-                  //     itemCount: postsData.length,
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       return postItem(index);
-                  //     },
-                  //   ),
-                  // ),
-                  Container(
-                      decoration: BoxDecoration(color: Colors.grey[200]),
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: MediaQuery.removePadding(
-                        removeTop: true,
-                        context: context,
-                        child: StaggeredGridView.countBuilder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          crossAxisCount: 4,
-                          itemCount: postsData.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return postItem(index);
-                          },
-                          staggeredTileBuilder: (int index) {
-                            return StaggeredTile.fit(2);
-                          },
-                          mainAxisSpacing: 5.0,
-                          crossAxisSpacing: 5.0,
-                        ),
-                      )),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    child: MediaQuery.removePadding(
+                      removeTop: true,
+                      context: context,
+                      child: StaggeredGridView.countBuilder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: 4,
+                        itemCount: postsData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          PostRecordModel model =
+                              PostRecordModel.fromJson(postsData[index]);
+                          return postItem(model, index);
+                        },
+                        staggeredTileBuilder: (int index) {
+                          return StaggeredTile.fit(2);
+                        },
+                        mainAxisSpacing: 12.0,
+                        crossAxisSpacing: 10.0,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -200,63 +194,6 @@ class _MinePageState extends BasePageState {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget postItem(int index) {
-    String recordId, filename, title;
-    recordId = postsData[index]['id'] ?? '';
-    filename = postsData[index]['fileName'] ?? '';
-    title = postsData[index]['title'] ?? '';
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Global.memWhite,
-        borderRadius: BorderRadius.all(
-          Radius.circular(6),
-        ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Color.fromARGB(30, 0, 0, 0),
-        //     blurRadius: 2.0,
-        //   ),
-        // ],
-      ),
-      // margin: EdgeInsets.symmetric(
-      //   horizontal: 6,
-      //   vertical: 6,
-      // ),
-      child: Column(
-        children: [
-          Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(6),
-                topRight: Radius.circular(6),
-              ),
-              child: FadeInImage.assetNetwork(
-                fit: BoxFit.cover,
-                placeholder: 'res/image/no_avatar.png',
-                image: Global.getPostImageUrl(recordId, filename),
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 8,
-            ),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
             ),
           ),
         ],

@@ -2,8 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mempics/global.dart';
+import 'package:mempics/mem_widgets/mem_title_bar.dart';
+import 'package:mempics/model/post_record/post_record_model.dart';
 import 'package:mempics/pages/base_page.dart';
 
 class HomePage extends BasePage {
@@ -14,22 +17,49 @@ class HomePage extends BasePage {
 }
 
 class _HomePageState extends BasePageState<HomePage> {
-  List itemData;
+  List postsData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          ListView.separated(
-            itemBuilder: (context, index) {
-              return itemView(index);
-            },
-            separatorBuilder: (context, index) {
-              return Container();
-            },
-            itemCount: itemData.length,
-          )
+          Padding(
+            padding: EdgeInsets.only(
+              top: 50,
+              bottom: 60,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: MediaQuery.removePadding(
+                removeTop: true,
+                context: context,
+                child: StaggeredGridView.countBuilder(
+                  shrinkWrap: true,
+                  // physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 4,
+                  itemCount: postsData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    PostRecordModel model =
+                        PostRecordModel.fromJson(postsData[index]);
+                    return postItem(model, index);
+                  },
+                  staggeredTileBuilder: (int index) {
+                    return StaggeredTile.fit(2);
+                  },
+                  mainAxisSpacing: 12.0,
+                  crossAxisSpacing: 10.0,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: MemTitleBar(
+              'Mempics',
+              withShadow: false,
+            ),
+          ),
         ],
       ),
     );
@@ -39,18 +69,38 @@ class _HomePageState extends BasePageState<HomePage> {
     return Container(
       child: Column(
         children: [
-          Text(itemData[index]['title']),
+          Text(postsData[index]['title']),
         ],
       ),
     );
   }
 
   @override
-  void initData_1st() {
-    itemData = [];
+  Future<void> initData_1st() async {
+    postsData = [];
+    await getData();
   }
 
   @override
-  void initController_2nd() {
+  void initController_2nd() {}
+
+  //获取关注已关注用户的post
+  Future<void> getData() async {
+    BaseOptions baseOptions = BaseOptions(
+      connectTimeout: 10000,
+    );
+    Dio dio = Dio(baseOptions);
+    dio.interceptors.add(CookieManager(Global.cookieJar));
+    Response response = await dio.get(
+      '$serverAddress/share/friendspublish',
+    );
+    print('/share/friendspublish');
+    if (response.data['status'] == 0) {
+      Fluttertoast.showToast(msg: '获取post列表成功！');
+      postsData = response.data['data'];
+      setState(() {});
+    } else {
+      Fluttertoast.showToast(msg: '获取post列表失败！');
+    }
   }
 }

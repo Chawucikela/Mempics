@@ -35,7 +35,6 @@ class _MainFramePageState extends BasePageState<MainFramePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       backgroundColor: Global.memBgGrey,
       body: Stack(
         children: [

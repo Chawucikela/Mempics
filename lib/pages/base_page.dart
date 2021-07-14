@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mempics/model/post_record/post_record_model.dart';
+
+import '../global.dart';
 
 abstract class BasePage extends StatefulWidget {
   BasePage({Key key});
@@ -15,4 +18,45 @@ abstract class BasePageState<T extends BasePage> extends State<T> {
   void initData_1st();
 
   void initController_2nd();
+
+  //动态item样式
+  Widget postItem(PostRecordModel model ,int index) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(6),
+        ),
+      ),
+      child: Column(
+        children: [
+          Container(
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+              child: FadeInImage(
+                fit: BoxFit.cover,
+                placeholder: AssetImage('res/image/loading.gif'),
+                image: NetworkImage(Global.getPostImageUrl(model.id, model.fileName)),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 4,
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              model.title,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
