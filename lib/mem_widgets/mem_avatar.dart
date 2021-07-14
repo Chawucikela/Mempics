@@ -5,8 +5,10 @@ class MemAvatar extends StatefulWidget {
   final double height;
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
+  final BoxBorder border;
   final String inputUrl;
   final bool isOnline;
+  final bool isOval;
 
   MemAvatar(
     this.inputUrl, {
@@ -14,7 +16,9 @@ class MemAvatar extends StatefulWidget {
     this.height,
     this.margin,
     this.padding,
+    this.border,
     this.isOnline,
+    this.isOval = true,
   });
 
   @override
@@ -36,6 +40,10 @@ class MemAvatarState extends State<MemAvatar> {
       height: widget.height,
       margin: widget.margin,
       padding: widget.padding,
+      decoration: BoxDecoration(
+        border: widget.border,
+        shape: widget.isOval ? BoxShape.circle : BoxShape.rectangle,
+      ),
       child: ClipOval(
         child: FadeInImage(
           fit: BoxFit.cover,

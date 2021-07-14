@@ -1,38 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mempics/global.dart';
-import 'package:mempics/mem_widgets/mem_network_avatar.dart';
+import 'package:mempics/mem_widgets/mem_avatar.dart';
 
 ///标题栏
 class MemTitleBar extends StatefulWidget {
-  //标题
-  final String title;
-
-  //标题替换组件
-  final Widget titleReplacementWidget;
-
-  //头像
-  final String avatarImage;
-
-  //是否开启左侧返回按钮
-  final bool backAction;
-
-  //左侧组件
-  final Widget leftWidget;
-
-  //右侧组件
-  final Widget rightWidget;
-
-  //左侧按钮点击操作
-  final Function leftAction;
-
-  //右侧按钮点击操作
-  final Function rightAction;
-
-  //额外底部组件
-  final Widget additionalBottomWidget;
-
-  final bool withShadow;
+  final String title; //标题
+  final Widget titleReplacementWidget; //标题替换组件
+  final String avatarImage; //头像
+  final bool backAction; //是否开启左侧返回按钮
+  final Widget leftWidget; //左侧组件
+  final Widget rightWidget; //右侧组件
+  final Function leftAction; //左侧按钮点击操作
+  final Function rightAction; //右侧按钮点击操作
+  final Widget additionalBottomWidget; //额外底部组件
+  final bool withShadow; //显示阴影
 
   MemTitleBar(
     this.title, {

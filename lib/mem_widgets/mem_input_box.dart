@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../global.dart';
 
 class MemInputBox extends StatefulWidget {
-  bool hasBorder = true;
-  EdgeInsetsGeometry margin;
-  EdgeInsetsGeometry padding;
-  Color backgroundColor;
-  Color borderColor;
-  double borderWidth;
-  BorderRadiusGeometry borderRadius;
-  TextStyle textStyle;
-  TextStyle hintTextStyle;
-  String hintText;
-  TextEditingController controller;
-  TextInputAction textInputAction;
-  TextInputType textInputType;
-  bool obscureText = false;
+  final double width;
+  final double height;
+  final bool hasBorder;
+  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
+  final Color fillColor;
+  final Color borderColor;
+  final double borderWidth;
+  final BorderRadiusGeometry borderRadius;
+  final TextStyle textStyle;
+  final TextStyle hintTextStyle;
+  final String hintText;
+  final TextEditingController controller;
+  final TextInputAction textInputAction;
+  final Function(String) onSubmitted;
+  final TextInputType textInputType;
+  final bool obscureText;
 
   MemInputBox({
-    this.hasBorder,
+    this.width,
+    this.height,
+    this.hasBorder = true,
     this.margin,
     this.padding,
-    this.backgroundColor,
+    this.fillColor,
     this.borderColor,
     this.borderWidth,
     this.borderRadius,
@@ -31,8 +37,9 @@ class MemInputBox extends StatefulWidget {
     this.hintText,
     this.controller,
     this.textInputAction,
+    this.onSubmitted,
     this.textInputType,
-    this.obscureText,
+    this.obscureText = false,
   });
 
   @override
@@ -50,14 +57,13 @@ class _MemInputBoxState extends State<MemInputBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: widget.padding ??
-          EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 4,
-          ),
+      width: widget.width,
+      height: widget.height,
+      padding: widget.padding,
       margin: widget.margin,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: widget.backgroundColor ?? Global.memBgGrey,
+        color: widget.fillColor ?? Global.memBgGrey,
         border: widget.hasBorder
             ? Border.all(
                 width: widget.borderWidth ?? 0.5,
@@ -72,6 +78,7 @@ class _MemInputBoxState extends State<MemInputBox> {
       child: TextField(
         controller: widget.controller,
         textInputAction: widget.textInputAction,
+        onSubmitted: widget.onSubmitted,
         keyboardType: widget.textInputType,
         obscureText: widget.obscureText ?? false,
         style: widget.textStyle ??
@@ -80,13 +87,33 @@ class _MemInputBoxState extends State<MemInputBox> {
               fontSize: 18,
             ),
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
           hintText: widget.hintText ?? '',
           hintStyle: widget.hintTextStyle ??
               TextStyle(
                 fontSize: 16,
                 color: Global.memLightGrey2,
               ),
-          border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
         ),
       ),
     );
