@@ -45,12 +45,22 @@ class MemAvatarState extends State<MemAvatar> {
         shape: widget.isOval ? BoxShape.circle : BoxShape.rectangle,
       ),
       child: ClipOval(
-        child: FadeInImage(
+        child: FadeInImage.assetNetwork(
           fit: BoxFit.cover,
-          placeholder: AssetImage('res/image/no_avatar.png'),
-          image: NetworkImage(widget.inputUrl, headers: {}),
+          placeholder: 'res/image/no_avatar.png',
+          image: widget.inputUrl,
+          imageErrorBuilder: (context, error, stackTrace) {
+            return Image.asset('res/image/no_avatar.png');
+          },
         ),
       ),
+      // child: ClipOval(
+      //   child: FadeInImage(
+      //     fit: BoxFit.cover,
+      //     placeholder: AssetImage('res/image/no_avatar.png'),
+      //     image: NetworkImage(widget.inputUrl, headers: {}),
+      //   ),
+      // ),
     );
   }
 

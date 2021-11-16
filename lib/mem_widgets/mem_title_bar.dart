@@ -26,7 +26,7 @@ class MemTitleBar extends StatefulWidget {
     this.leftAction,
     this.rightAction,
     this.additionalBottomWidget,
-    this.withShadow,
+    this.withShadow = true,
   });
 
   @override

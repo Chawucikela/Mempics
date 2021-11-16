@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'model/user_info/user_info_model.dart';
 
-String serverAddress = 'http://10.0.0.12:8080';
+String serverAddress = 'http://10.10.107.22:8080';
 
 //flutter pub run build_runner build
 

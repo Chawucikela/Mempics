@@ -11,6 +11,8 @@ import 'package:mempics/mem_widgets/mem_button.dart';
 import 'package:mempics/mem_widgets/mem_avatar.dart';
 import 'package:mempics/mem_widgets/mem_title_bar.dart';
 import 'package:mempics/model/post_record/post_record_model.dart';
+import 'package:mempics/utils/mem_no_effect_scroll_behavior.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'base_page.dart';
 
@@ -26,6 +28,8 @@ class _MinePageState extends BasePageState {
   List followingData; //关注数据
   List postsData; //我发布的所有post数据
 
+  RefreshController _mineListRefreshController; //个人页面列表刷新控制器
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,133 +40,146 @@ class _MinePageState extends BasePageState {
               top: 50,
               bottom: 60,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //头像
-                        MemAvatar(
-                          Global.getAvatarUrl(LoggedInUser.userInfoModel.id),
-                          width: 80,
-                          height: 80,
-                          margin: EdgeInsets.only(right: 16),
-                          isOval: true,
-                          border: Border.all(
-                            width: 0.6,
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              //发布动态数
-                              Expanded(
-                                child: indexItem(
-                                  'Posts',
-                                  postsData.length.toString(),
-                                ),
-                              ),
-                              //粉丝数
-                              Expanded(
-                                child: indexItem('Followers',
-                                    followersData.length.toString()),
-                              ),
-                              //关注数
-                              Expanded(
-                                child: indexItem('Following',
-                                    followingData.length.toString()),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //昵称和简介
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            LoggedInUser.userInfoModel.nickname,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+            child: SmartRefresher(
+              controller: _mineListRefreshController,
+              onRefresh: () async {
+                await getData();
+                setState(() {});
+              },
+              header: WaterDropHeader(),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //头像、post、粉丝、关注数
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //头像
+                          MemAvatar(
+                            Global.getAvatarUrl(LoggedInUser.userInfoModel.id),
+                            width: 80,
+                            height: 80,
+                            margin: EdgeInsets.only(right: 16),
+                            isOval: true,
+                            border: Border.all(
+                              width: 0.6,
+                              color: Colors.grey[300],
                             ),
                           ),
-                          margin: EdgeInsets.symmetric(vertical: 2),
-                        ),
-                        Container(
-                          child: Text(
-                            "A biography, or simply bio, is a detailed description of a person's life.",
-                            style: TextStyle(fontSize: 12, height: 1.5),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                //发布动态数
+                                Expanded(
+                                  child: indexItem(
+                                    'Posts',
+                                    postsData.length.toString(),
+                                  ),
+                                ),
+                                //粉丝数
+                                Expanded(
+                                  child: indexItem('Followers',
+                                      followersData.length.toString()),
+                                ),
+                                //关注数
+                                Expanded(
+                                  child: indexItem('Following',
+                                      followingData.length.toString()),
+                                ),
+                              ],
+                            ),
                           ),
-                          margin: EdgeInsets.symmetric(vertical: 2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //个人信息编辑按钮
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    child: MemButton(
-                      width: Global.screenWidth,
-                      alignment: Alignment.center,
-                      border: Border.all(
-                        width: 0.8,
-                        color: Global.memLightGrey1,
+                        ],
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                      margin: EdgeInsets.symmetric(vertical: 4),
+                    ),
+                    //昵称和简介
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              LoggedInUser.userInfoModel.nickname,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            margin: EdgeInsets.symmetric(vertical: 2),
+                          ),
+                          Container(
+                            child: Text(
+                              "A biography, or simply bio, is a detailed description of a person's life.",
+                              style: TextStyle(fontSize: 12, height: 1.5),
+                            ),
+                            margin: EdgeInsets.symmetric(vertical: 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //个人信息编辑按钮
+                    Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      child: MemButton(
+                        width: Global.screenWidth,
+                        alignment: Alignment.center,
+                        border: Border.all(
+                          width: 0.8,
+                          color: Global.memLightGrey1,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        margin: EdgeInsets.symmetric(vertical: 4),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          Fluttertoast.showToast(
+                            msg: 'Edit Profile',
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        },
+                      ),
+                    ),
+                    //post列表
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      child: MediaQuery.removePadding(
+                        removeTop: true,
+                        context: context,
+                        child: StaggeredGridView.countBuilder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          crossAxisCount: 4,
+                          itemCount: postsData.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            PostRecordModel model =
+                                PostRecordModel.fromJson(postsData[index]);
+                            return postItem(model, index);
+                          },
+                          staggeredTileBuilder: (int index) {
+                            return StaggeredTile.fit(2);
+                          },
+                          mainAxisSpacing: 12.0,
+                          crossAxisSpacing: 10.0,
                         ),
                       ),
-                      onTap: () {
-                        Fluttertoast.showToast(
-                          msg: 'Edit Profile',
-                          toastLength: Toast.LENGTH_SHORT,
-                        );
-                      },
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    child: MediaQuery.removePadding(
-                      removeTop: true,
-                      context: context,
-                      child: StaggeredGridView.countBuilder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisCount: 4,
-                        itemCount: postsData.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          PostRecordModel model =
-                              PostRecordModel.fromJson(postsData[index]);
-                          return postItem(model, index);
-                        },
-                        staggeredTileBuilder: (int index) {
-                          return StaggeredTile.fit(2);
-                        },
-                        mainAxisSpacing: 12.0,
-                        crossAxisSpacing: 10.0,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -212,7 +229,9 @@ class _MinePageState extends BasePageState {
   }
 
   @override
-  void initController_2nd() {}
+  void initController_2nd() {
+    _mineListRefreshController = new RefreshController();
+  }
 
   //获取粉丝数据
   Future<void> getFollowers() async {
@@ -226,11 +245,13 @@ class _MinePageState extends BasePageState {
     );
     print('/user/getfollower');
     if (response.data['status'] == 0) {
-      Fluttertoast.showToast(msg: '获取Follower数据成功！');
+      // Fluttertoast.showToast(msg: '获取Follower数据成功！');
+      print('获取Follower数据成功！');
       followersData = response.data['data'];
       LoggedInUser.userInfoModel.followerAmount = followersData.length;
     } else {
-      Fluttertoast.showToast(msg: '获取Follower数据失败！');
+      // Fluttertoast.showToast(msg: '获取Follower数据失败！');
+      print('获取Follower数据失败！');
     }
   }
 
@@ -246,11 +267,13 @@ class _MinePageState extends BasePageState {
     );
     print('/user/getfollowing');
     if (response.data['status'] == 0) {
-      Fluttertoast.showToast(msg: '获取Following数据成功！');
+      // Fluttertoast.showToast(msg: '获取Following数据成功！');
+      print('获取Following数据成功！');
       followingData = response.data['data'];
       LoggedInUser.userInfoModel.followingAmount = followingData.length;
     } else {
-      Fluttertoast.showToast(msg: '获取Following数据失败！');
+      // Fluttertoast.showToast(msg: '获取Following数据失败！');
+      print('获取Following数据失败！');
     }
   }
 
@@ -266,10 +289,16 @@ class _MinePageState extends BasePageState {
     );
     print('/share/allmypublish');
     if (response.data['status'] == 0) {
-      Fluttertoast.showToast(msg: '获取我的post列表成功！');
+      // Fluttertoast.showToast(msg: '获取我的post列表成功！');
+      print('获取我的post列表成功！');
       postsData = response.data['data'];
+      if (_mineListRefreshController.isRefresh)
+        _mineListRefreshController.refreshCompleted();
     } else {
-      Fluttertoast.showToast(msg: '获取我的post列表失败！');
+      // Fluttertoast.showToast(msg: '获取我的post列表失败！');
+      print('获取我的post列表失败！');
+      if (_mineListRefreshController.isRefresh)
+        _mineListRefreshController.refreshCompleted();
     }
   }
 }

@@ -135,7 +135,8 @@ class _ExplorePageState extends BasePageState {
       searchResultData = response.data['data'];
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: '获取搜索数据失败！');
+      // Fluttertoast.showToast(msg: '获取搜索数据失败！');
+      print('获取搜索数据失败！');
     }
   }
 }

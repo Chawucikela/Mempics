@@ -22,8 +22,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
       _ipAddressTextEditingController;
 
   @override
-  void initData_1st() {
-  }
+  void initData_1st() {}
 
   @override
   void initController_2nd() {
@@ -153,7 +152,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
     );
     print('/user/login');
     if (response.data['status'] == 0) {
-      Fluttertoast.showToast(msg: '登录成功！');
+      // Fluttertoast.showToast(msg: '登录成功！');
       UserInfoModel userInfoModel =
           UserInfoModel.fromJson(response.data['data']);
       LoggedInUser.loggedIn(userInfoModel);
